@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -12,7 +13,16 @@ namespace BugTrackerApp.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string DisplayName { get; set; }
+        [InverseProperty("User")]
+        public virtual ICollection<Project> Created { get; set; }
 
+        [InverseProperty("Users")]
+        public virtual ICollection<Project> Managed { get; set; }
+        public ApplicationUser()
+        {
+            Created = new HashSet<Project>();
+            Managed = new HashSet<Project>();
+        }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -42,5 +52,6 @@ namespace BugTrackerApp.Models
     public class Projects
     {
         public object User { get; internal set; }
+        public object UserId { get; internal set; }
     }
 }

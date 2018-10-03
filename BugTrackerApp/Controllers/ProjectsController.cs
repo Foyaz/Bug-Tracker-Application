@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using BugTrackerApp.Models;
 
@@ -18,7 +15,12 @@ namespace BugTrackerApp.Controllers
         public ActionResult Index()
         {
             var projects = db.Projects.Include(p => p.User);
-            return View(projects.ToList());
+            return View(db.Projects.ToList());
+        }
+
+        private new ActionResult View(object p)
+        {
+            throw new NotImplementedException();
         }
 
         // GET: Projects/Details/5
@@ -28,7 +30,7 @@ namespace BugTrackerApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
+            Projects project = db.Projects.Find(id);
             if (project == null)
             {
                 return HttpNotFound();
@@ -48,7 +50,7 @@ namespace BugTrackerApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Created,Updated,Description,UserId")] Project project)
+        public ActionResult Create([Bind(Include = "Id,Name,Created,Updated,Description,UserId")] Projects project)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +70,7 @@ namespace BugTrackerApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
+            Projects project = db.Projects.Find(id);
             if (project == null)
             {
                 return HttpNotFound();
@@ -82,7 +84,7 @@ namespace BugTrackerApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Created,Updated,Description,UserId")] Project project)
+        public ActionResult Edit([Bind(Include = "Id,Name,Created,Updated,Description,UserId")] Projects project)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +103,7 @@ namespace BugTrackerApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
+            Projects project = db.Projects.Find(id);
             if (project == null)
             {
                 return HttpNotFound();
@@ -114,7 +116,7 @@ namespace BugTrackerApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Project project = db.Projects.Find(id);
+            Projects project = db.Projects.Find(id);
             db.Projects.Remove(project);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -130,3 +132,4 @@ namespace BugTrackerApp.Controllers
         }
     }
 }
+
