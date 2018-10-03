@@ -3,20 +3,20 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <div>
+        <li>
             <a class="hiddenanchor" id="signup"></a>
             <a class="hiddenanchor" id="signin"></a>
 
@@ -32,10 +32,10 @@ else
                                 <input type="password" class="form-control" placeholder="Password" required="" />
                             </div>
                             <div>
-                                <li>
+                                <p>
                                     @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) |
                                     @Html.ActionLink("Forgot your password?", "ForgotPassword", "Account")
-                                </li>
+                                </p>
 
                             </div>
 
@@ -81,17 +81,20 @@ else
                             <div class="separator">
                                 <p class="change_link">
                                     Already a member ?
-        @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-        </p>
-        <br />
+                                    @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                                </p>
+                                <br />
 
-        <div>
-        </div>
-        </div>
-        </form>
-        </section>
-        </div>
-        </div>
-        </div>
+                                <div>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </li>
     </ul>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }
